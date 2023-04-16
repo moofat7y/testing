@@ -20,6 +20,8 @@ import Times from "./pages/Times";
 import { useSelector } from "react-redux";
 import DiagnosisTimes from "./pages/DiagnosisTimes";
 import Pricing from "./pages/Pricing";
+import PaymentSuccess from "./pages/PaymentSuccess";
+import PaymentCancel from "./pages/PaymentCancel";
 // import Meeting from "./pages/Meeting";
 
 function App() {
@@ -48,6 +50,22 @@ function App() {
           element={
             <Layout>
               <Pricing />
+            </Layout>
+          }
+        />
+        <Route
+          path="/payment/success"
+          element={
+            <Layout>
+              <PaymentSuccess />
+            </Layout>
+          }
+        />
+        <Route
+          path="/payment/cancel"
+          element={
+            <Layout>
+              <PaymentCancel />
             </Layout>
           }
         />

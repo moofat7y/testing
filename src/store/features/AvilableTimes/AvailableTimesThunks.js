@@ -6,7 +6,7 @@ export const getAvailableTimes = createAsyncThunk(
   "availableTimes/getAvailableTimes",
   async (_, thunkAPI) => {
     try {
-      const response = await axios(`${API_URL}/User/GetAllTime`);
+      const response = await axios(`${API_URL}/AvailableTime/GetAllTime`);
       console.log(response);
       return response.data.result;
     } catch (error) {
@@ -19,7 +19,7 @@ export const updateAvailableTimes = createAsyncThunk(
   async ({ timeId, status }, thunkAPI) => {
     try {
       const response = await axios.put(
-        `${API_URL}/User/UpdateAvailableTimeStatus?status=${status}&TimeId=${timeId}`
+        `${API_URL}/AvailableTime/UpdateAvailableTimeStatus?status=${status}&TimeId=${timeId}`
       );
       // console.log(response);
       thunkAPI.dispatch(getAvailableTimes());
