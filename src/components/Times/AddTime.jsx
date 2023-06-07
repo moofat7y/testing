@@ -47,7 +47,7 @@ const AddTime = ({ open, setOpen }) => {
       addTimeThunk({
         ...data,
         availableTime: selectedDate,
-        staffId: user.staffId,
+        staffId: user.patientId,
       })
     ).then(() => {
       reset(

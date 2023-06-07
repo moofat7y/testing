@@ -10,8 +10,9 @@ import DialogBox from "../components/Pricing/DialogBox";
 import { updateAvailableTimes } from "../store/features/AvilableTimes/AvailableTimesThunks";
 import PricingList from "../components/Pricing/PricingList";
 import { useDispatch } from "react-redux";
+import AddonsList from "../components/Addons/AddonsList";
 
-const Pricing = () => {
+const Addons = () => {
   const { state } = useLocation();
   const navigate = useNavigate();
   const [open, setOpen] = useState(false);
@@ -66,7 +67,7 @@ const Pricing = () => {
           color="text.primary"
           gutterBottom
         >
-          Pricing
+          Addons
         </Typography>
         <Typography
           variant="h5"
@@ -80,14 +81,14 @@ const Pricing = () => {
         </Typography>
       </Container>
       {/* End hero unit */}
-      <PricingList />
-      <PaymentModal
+      <AddonsList />
+      {/* <PaymentModal
         open={open}
         setOpen={setOpen}
         setShowDialog={setShowDialog}
-      />
+      /> */}
     </>
   );
 };
 
-export default Pricing;
+export default Addons;

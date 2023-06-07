@@ -1,4 +1,4 @@
-import React, { useEffect } from "react";
+import React, { useEffect, useState } from "react";
 import Timeline from "@mui/lab/Timeline";
 import TimelineItem from "@mui/lab/TimelineItem";
 import TimelineSeparator from "@mui/lab/TimelineSeparator";
@@ -9,6 +9,7 @@ import {
   Button,
   Chip,
   Container,
+  Stack,
   Typography,
   useMediaQuery,
 } from "@mui/material";
@@ -22,10 +23,17 @@ import { useTheme } from "@emotion/react";
 import { TimelineOppositeContent } from "@mui/lab";
 import CustomSkeleton from "../components/CustomSkeleton";
 import { useNavigate } from "react-router-dom";
+import axios from "axios";
+import { API_URL } from "../utils/constants";
+import ConfirmModal from "../components/Pricing/ConfirmModal";
+import CustomModal from "../components/CustomModal";
 const DiagnosisTimes = () => {
-  const { availableTimes, isLoading } = useSelector(
-    (state) => state.availableTimes
-  );
+  const [isOpen, setIsOpen] = useState({ open: false, data: null });
+  const [boquetUpdate, setBoquetUpdate] = useState(false);
+
+  const { availableTimes: times, auth } = useSelector((state) => state);
+  const { availableTimes, isLoading } = times;
+  const { patientId, reports } = auth.user;
   const navigate = useNavigate();
 
   const theme = useTheme();
@@ -36,12 +44,40 @@ const DiagnosisTimes = () => {
   useEffect(() => {
     dispatch(getAvailableTimes());
   }, []);
-  const handletimeNavigate = (time) => {
+  const handletimeNavigate = async (time) => {
+    // yirerat453@in2reach.com
+    if (reports === null) {
+      navigate("/pricing");
+    }
+    if (reports === 0) {
+      setBoquetUpdate(true);
+    }
+    if (reports && reports > 0) {
+      await dispatch(
+        updateAvailableTimes({ timeId: time.timeId, status: "Pending" })
+      );
+      setIsOpen({ open: true, data: time.timeId });
+    }
+    // try {
+    //   const response = await axios.post(
+    //     `${API_URL}/ReportVideoChat/CreateReportVideoChat?patientId=${patientId}&availabletimeId=${time.timeId}`
+    //   );
+    //   setIsOpen({ open: true, data: { timeId: time.timeId, patientId } });
+    // } catch (error) {
+    //   if (error.response.data.message === "100") {
+    //     return navigate("/pricing");
+    //   }
+    //   if (error.response.data.message === "101") {
+    //     return setBoquetUpdate(true);
+    //   }
+    // }
+    // console.log(response.response.data.message);
     // console.log(timeId);
-    dispatch(updateAvailableTimes({ timeId: time.timeId, status: "Pending" }));
-    // window.location.href = `${window.location.origin}/pricing`;
-    navigate("/pricing", { state: time, replace: true });
+    // dispatch(updateAvailableTimes({ timeId: time.timeId, status: "Pending" }));
+    // // window.location.href = `${window.location.origin}/pricing`;
+    // navigate("/pricing", { state: time, replace: true });
   };
+  console.log(boquetUpdate);
   return (
     <>
       <Container maxWidth="xl" sx={{ py: "150px", minHeight: "500px" }}>
@@ -154,6 +190,35 @@ const DiagnosisTimes = () => {
           </>
         )}
       </Container>
+      <ConfirmModal
+        open={isOpen}
+        handleClose={() => setIsOpen({ open: false, data: null })}
+        date={new Date()}
+      />
+
+      <CustomModal
+        open={boquetUpdate}
+        handleClose={() => setBoquetUpdate(false)}
+      >
+        {/* <Typography id="modal-modal-title" variant="h6" component="h2">
+          تاكيد الحجز
+        </Typography> */}
+        <Typography id="modal-modal-description" sx={{ mt: 2 }}>
+          الباقه الخاصه بك غير كافيه
+        </Typography>
+        <Stack sx={{ marginTop: "10px" }} spacing={2} direction="row">
+          <Button onClick={() => navigate("/addons")} variant="outlined">
+            شراء تشخيص
+          </Button>
+          <Button
+            sx={{ marginRight: "10px" }}
+            onClick={() => navigate("/pricing")}
+            variant="contained"
+          >
+            تحديث الباقه الخاصه بك
+          </Button>
+        </Stack>
+      </CustomModal>
     </>
   );
 };

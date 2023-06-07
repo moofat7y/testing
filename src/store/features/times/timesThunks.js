@@ -20,7 +20,10 @@ export const addTimeThunk = createAsyncThunk(
   "times/addTime",
   async (data, thunkAPI) => {
     try {
-      const response = await axios.post(`${API_URL}/Staff/AddTime`, data);
+      const response = await axios.post(
+        `${API_URL}/AvailableTime/AddTime`,
+        data
+      );
 
       notifySucess(response.data.message);
       thunkAPI.dispatch(getAllTimes(data.staffId));

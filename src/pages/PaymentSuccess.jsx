@@ -1,7 +1,16 @@
 import { Box, Container, Typography } from "@mui/material";
-import React from "react";
+import React, { useEffect } from "react";
+import { useDispatch, useSelector } from "react-redux";
+import { getUserReports } from "../store/features/auth/thunks/authThunks";
 
 const PaymentSuccess = () => {
+  const { patientId } = useSelector((state) => state.auth.user);
+  const dispatch = useDispatch();
+  useEffect(() => {
+    if (patientId) {
+      dispatch(getUserReports(patientId));
+    }
+  }, []);
   return (
     <Box
       sx={{

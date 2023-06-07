@@ -1,5 +1,4 @@
 import React, { useState } from "react";
-import Button from "@mui/material/Button";
 import Card from "@mui/material/Card";
 import CardActions from "@mui/material/CardActions";
 import CardContent from "@mui/material/CardContent";
@@ -11,7 +10,7 @@ import Box from "@mui/material/Box";
 import axios from "axios";
 import { API_URL } from "../../utils/constants";
 import { LoadingButton } from "@mui/lab";
-const PricingItem = ({ bouquet, index }) => {
+const AddonItem = ({ addon, index }) => {
   const [isLoading, setIsLoading] = useState(false);
   const onPay = async () => {
     try {
@@ -24,7 +23,7 @@ const PricingItem = ({ bouquet, index }) => {
       //   }&flag=${1}&qunatiy=${1}`
       // );
       const response = await axios.post(
-        `${API_URL}/Payment/CreateCheckoutSession?bouquetId=${bouquet.id}&flag=1&quantity=1`
+        `${API_URL}/Payment/CreateCheckoutSession?bouquetId=${addon.id}&flag=2&quantity=1`
       );
       console.log(response);
       setIsLoading(false);
@@ -36,9 +35,9 @@ const PricingItem = ({ bouquet, index }) => {
   return (
     <Grid
       item
-      key={bouquet.name}
+      key={addon.name}
       xs={12}
-      sm={bouquet.name === "Enterprise" ? 12 : 6}
+      sm={addon.name === "Enterprise" ? 12 : 6}
       md={4}
     >
       <Card
@@ -57,10 +56,10 @@ const PricingItem = ({ bouquet, index }) => {
         }
       >
         <CardHeader
-          title={bouquet.name}
+          title={addon.name}
           //   subheader={bouquet.subheader}
           titleTypographyProps={{ align: "center" }}
-          action={bouquet.name === "Pro" ? <StarIcon /> : null}
+          action={addon.name === "Pro" ? <StarIcon /> : null}
           subheaderTypographyProps={{
             align: "center",
           }}
@@ -99,7 +98,7 @@ const PricingItem = ({ bouquet, index }) => {
                   : null
               }
             >
-              ${bouquet.price}
+              ${addon.price}
             </Typography>
             <Typography variant="h6" color="inherit">
               /mo
@@ -107,9 +106,9 @@ const PricingItem = ({ bouquet, index }) => {
           </Box>
           {/* <ul> */}
           {/* {bouquet.description.map((line) => ( */}
-          <Typography component="li" variant="subtitle1" align="center">
+          {/* <Typography component="li" variant="subtitle1" align="center">
             {bouquet.description}
-          </Typography>
+          </Typography> */}
           {/* ))} */}
           {/* </ul> */}
         </CardContent>
@@ -131,4 +130,4 @@ const PricingItem = ({ bouquet, index }) => {
   );
 };
 
-export default PricingItem;
+export default AddonItem;

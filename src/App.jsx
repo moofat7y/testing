@@ -22,6 +22,8 @@ import DiagnosisTimes from "./pages/DiagnosisTimes";
 import Pricing from "./pages/Pricing";
 import PaymentSuccess from "./pages/PaymentSuccess";
 import PaymentCancel from "./pages/PaymentCancel";
+import Addons from "./pages/Addons";
+import StaffRegister from "./components/Auth/StaffRegister";
 // import Meeting from "./pages/Meeting";
 
 function App() {
@@ -54,6 +56,15 @@ function App() {
           }
         />
         <Route
+          path="/addons"
+          element={
+            <Layout>
+              <Addons />
+            </Layout>
+          }
+        />
+
+        <Route
           path="/payment/success"
           element={
             <Layout>
@@ -79,7 +90,7 @@ function App() {
             }
           />
         )}
-        {user?.role === "Doctor" && (
+        {user?.role === "Staff" && (
           <Route
             path="/times"
             element={
@@ -102,6 +113,14 @@ function App() {
           element={
             <AuthLayout>
               <Register />
+            </AuthLayout>
+          }
+        />
+        <Route
+          path="/staff-register"
+          element={
+            <AuthLayout>
+              <StaffRegister />
             </AuthLayout>
           }
         />

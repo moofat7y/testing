@@ -1,5 +1,9 @@
 import { createSlice } from "@reduxjs/toolkit";
-import { getAvailableTimes } from "./AvailableTimesThunks";
+import {
+  getAvailableTimes,
+  createReportVideoChat,
+  updateAvailableTimes,
+} from "./AvailableTimesThunks";
 
 const initialState = {
   availableTimes: [],
@@ -20,6 +24,21 @@ const AvailableTimesSlice = createSlice({
     });
     builder.addCase(getAvailableTimes.rejected, (state, action) => {
       state.isLoading = false;
+    });
+    builder.addCase(updateAvailableTimes.fulfilled, (state, action) => {
+      state.availableTimes = state.availableTimes.map((time) =>
+        time.timeId === action.meta.arg.timeId
+          ? { ...time, status: action.meta.arg.status }
+          : time
+      );
+    });
+    builder.addCase(createReportVideoChat.fulfilled, (state, action) => {
+      state.isLoading = false;
+      state.availableTimes = state.availableTimes.map((time) =>
+        time.timeId === action.meta.arg.timeId
+          ? { ...time, status: "Reserved" }
+          : time
+      );
     });
   },
 });
