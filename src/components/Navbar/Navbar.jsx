@@ -23,6 +23,7 @@ const Navbar = () => {
   const { isRtl, toggleLanguage } = useDirectionThemeContext();
 
   const user = useSelector((state) => state.auth.user);
+  console.log(user, "user");
   const [anchorElNav, setAnchorElNav] = useState(null);
   const [isScrolled, setIsScrolled] = useState(false);
   const navigate = useNavigate();
@@ -94,7 +95,7 @@ const Navbar = () => {
             >
               {/* Mobile  */}
               {Links.map((link) => {
-                if (link.path === "/times" && user?.role !== "Doctor")
+                if (link.path === "/times" && user?.role !== "Staff")
                   return null;
                 return (
                   <NavLink to={link.path} key={link.path}>
@@ -117,8 +118,7 @@ const Navbar = () => {
           {/* LAPTOP */}
           <Box sx={{ display: { xs: "none", md: "flex" } }}>
             {Links.map((link) => {
-              if (link.path === "/times" && user?.role !== "Doctor")
-                return null;
+              if (link.path === "/times" && user?.role !== "Staff") return null;
               return (
                 <NavLink to={link.path} key={link.path}>
                   <Button

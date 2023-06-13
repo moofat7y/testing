@@ -4,6 +4,7 @@ import {
   register,
   staffRegister,
   getUserReports,
+  loginStaff,
 } from "./thunks/authThunks";
 const user = JSON.parse(localStorage.getItem("user"));
 const initialState = {
@@ -59,6 +60,18 @@ const authSlice = createSlice({
       state.user = action.payload.result;
     });
     builder.addCase(login.rejected, (state, action) => {
+      state.isLoading = false;
+      state.user = null;
+    });
+    builder.addCase(loginStaff.pending, (state) => {
+      state.isLoading = true;
+    });
+    builder.addCase(loginStaff.fulfilled, (state, action) => {
+      state.isLoading = false;
+      state.isSuccess = true;
+      state.user = action.payload.result;
+    });
+    builder.addCase(loginStaff.rejected, (state, action) => {
       state.isLoading = false;
       state.user = null;
     });

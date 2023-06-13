@@ -7,8 +7,8 @@ import { useForm } from "react-hook-form";
 import { useDispatch, useSelector } from "react-redux";
 import { useNavigate } from "react-router-dom";
 import { registerReset, reset } from "../../store/features/auth/authSlice";
-import { login } from "../../store/features/auth/thunks/authThunks";
-const Login = () => {
+import { loginStaff } from "../../store/features/auth/thunks/authThunks";
+const StaffLogin = () => {
   const navigate = useNavigate();
   const dispatch = useDispatch();
   const { isLoading, isSuccess } = useSelector((state) => state.auth);
@@ -21,7 +21,7 @@ const Login = () => {
     //check if no errorrs in errors object
     // console.log(data);
     if (Object.keys(errors).length === 0) {
-      dispatch(login(data));
+      dispatch(loginStaff(data));
     }
   };
   useEffect(() => {
@@ -97,24 +97,7 @@ const Login = () => {
         >
           هل نسيت كلمة المرور ؟
         </Typography>
-        <Typography
-          variant="body2"
-          component="p"
-          color="text.main"
-          sx={{ cursor: "pointer" }}
-        >
-          <Typography
-            component="span"
-            variant="body2"
-            sx={{
-              textDecoration: "underline",
-              mx: "5px",
-            }}
-            onClick={() => navigate("/staff-login")}
-          >
-            تسجيل الدخول كطبيب
-          </Typography>
-        </Typography>
+
         <Box
           sx={{
             mt: "50px",
@@ -156,4 +139,4 @@ const Login = () => {
   );
 };
 
-export default Login;
+export default StaffLogin;

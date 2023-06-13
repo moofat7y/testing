@@ -24,10 +24,12 @@ import PaymentSuccess from "./pages/PaymentSuccess";
 import PaymentCancel from "./pages/PaymentCancel";
 import Addons from "./pages/Addons";
 import StaffRegister from "./components/Auth/StaffRegister";
+import StaffLogin from "./components/Auth/StaffLogin";
 // import Meeting from "./pages/Meeting";
 
 function App() {
   const { user } = useSelector((state) => state.auth);
+
   return (
     <DirectionThemeProvider>
       <Routes>
@@ -129,6 +131,14 @@ function App() {
           element={
             <AuthLayout>
               <Login />
+            </AuthLayout>
+          }
+        />
+        <Route
+          path="/staff-login"
+          element={
+            <AuthLayout>
+              <StaffLogin />
             </AuthLayout>
           }
         />
