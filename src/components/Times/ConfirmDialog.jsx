@@ -12,7 +12,7 @@ import {
   getAllTimes,
 } from "../../store/features/times/timesThunks";
 const ConfirmDialog = ({ open, setOpen, deletedTimeId }) => {
-  const { staffId } = useSelector((state) => state.auth.user);
+  const { userId } = useSelector((state) => state.auth.user);
   const dispatch = useDispatch();
   const handleDelete = () => {
     dispatch(deleteTimeThunk(deletedTimeId)).then(() => {

@@ -1,9 +1,10 @@
 import { createSlice } from "@reduxjs/toolkit";
-import { getAllTimes } from "./timesThunks";
+import { getAllTimes, getStaffTimes } from "./timesThunks";
 
 const initialState = {
   times: [],
   isLoading: false,
+  staffTimes: [],
 };
 
 const timesSlice = createSlice({
@@ -20,6 +21,16 @@ const timesSlice = createSlice({
     builder.addCase(getAllTimes.fulfilled, (state, action) => {
       state.isLoading = false;
       state.times = action.payload;
+    });
+    builder.addCase(getStaffTimes.pending, (state, action) => {
+      state.isLoading = true;
+    });
+    builder.addCase(getStaffTimes.fulfilled, (state, action) => {
+      state.isLoading = false;
+      state.staffTimes = action.payload;
+    });
+    builder.addCase(getStaffTimes.rejected, (state, action) => {
+      state.isLoading = false;
     });
   },
 });

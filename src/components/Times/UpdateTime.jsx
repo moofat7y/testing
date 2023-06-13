@@ -6,7 +6,7 @@ import { useForm } from "react-hook-form";
 import { notifyError } from "../../utils/helper";
 import { useDispatch, useSelector } from "react-redux";
 import {
-  getAllTimes,
+  getStaffTimes,
   updateTimeThunk,
 } from "../../store/features/times/timesThunks";
 import ReusableDialog from "./ReusableDialog";
@@ -57,7 +57,7 @@ const UpdateTime = ({ open, setOpen, time }) => {
       })
     ).then(() => {
       setTimeout(() => {
-        dispatch(getAllTimes(user?.staffId));
+        dispatch(getStaffTimes(user?.userId));
         setOpen(false);
       }, 2000);
     });

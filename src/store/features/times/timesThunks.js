@@ -2,12 +2,28 @@ import { createAsyncThunk } from "@reduxjs/toolkit";
 import axios from "axios";
 import { API_URL } from "../../../utils/constants";
 import { notifyError, notifySucess } from "../../../utils/helper";
-
+export const getStaffTimes = createAsyncThunk(
+  "times/getStaffTimes",
+  async (id, thunkAPI) => {
+    // console.log(id, "idddddddddddd");
+    try {
+      const response = await axios.get(
+        `${API_URL}/AvailableTime/GetStaffAllTime?Id=${id}`
+      );
+      return response.data.result;
+    } catch (error) {
+      console.log(error);
+      notifyError("Error while fetching times");
+      return thunkAPI.rejectWithValue(error);
+    }
+  }
+);
 export const getAllTimes = createAsyncThunk(
   "times/getAllTimes",
   async (id, thunkAPI) => {
+    // console.log(id, "idddddddddddd");
     try {
-      const response = await axios.get(`${API_URL}/Staff/GetAllTimes?id=${id}`);
+      const response = await axios.get(`${API_URL}/AvailableTime/GetAllTime`);
       return response.data.result;
     } catch (error) {
       console.log(error);
@@ -26,7 +42,7 @@ export const addTimeThunk = createAsyncThunk(
       );
 
       notifySucess(response.data.message);
-      thunkAPI.dispatch(getAllTimes(data.staffId));
+      thunkAPI.dispatch(getStaffTimes(data.userId));
       return response.data.result;
     } catch (error) {
       console.log(error);
@@ -40,7 +56,7 @@ export const deleteTimeThunk = createAsyncThunk(
   async (timeId, thunkAPI) => {
     try {
       const response = await axios.delete(
-        `${API_URL}/Staff/DeleteTime?timeid=${timeId}`
+        `${API_URL}/AvailableTime/DeleteTime?timeid=${timeId}`
       );
 
       notifySucess(response.data.message);
@@ -56,7 +72,10 @@ export const updateTimeThunk = createAsyncThunk(
   "times/updateTime",
   async (data, thunkAPI) => {
     try {
-      const response = await axios.put(`${API_URL}/Staff/UpdateTime`, data);
+      const response = await axios.put(
+        `${API_URL}/AvailableTime/UpdateTime`,
+        data
+      );
 
       notifySucess(response.data.message);
       return response.data.result;

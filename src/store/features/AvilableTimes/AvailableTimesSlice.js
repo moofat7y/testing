@@ -25,6 +25,7 @@ const AvailableTimesSlice = createSlice({
     builder.addCase(getAvailableTimes.rejected, (state, action) => {
       state.isLoading = false;
     });
+
     builder.addCase(updateAvailableTimes.fulfilled, (state, action) => {
       state.availableTimes = state.availableTimes.map((time) =>
         time.timeId === action.meta.arg.timeId

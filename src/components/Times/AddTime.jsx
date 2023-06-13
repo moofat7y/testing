@@ -31,6 +31,7 @@ const AddTime = ({ open, setOpen }) => {
   } = useForm();
   const dispatch = useDispatch();
   const { user } = useSelector((state) => state.auth);
+  console.log(user);
   const handleDateChange = (e) => {
     let onlyDate = e.$d.toISOString();
     setSelectedDate(onlyDate);
@@ -47,7 +48,7 @@ const AddTime = ({ open, setOpen }) => {
       addTimeThunk({
         ...data,
         availableTime: selectedDate,
-        staffId: user.patientId,
+        staffId: user.userId,
       })
     ).then(() => {
       reset(

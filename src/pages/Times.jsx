@@ -5,18 +5,18 @@ import { useNavigate } from "react-router-dom";
 import CustomSkeleton from "../components/CustomSkeleton";
 import AddTime from "../components/Times/AddTime";
 import TimesTable from "../components/Times/TimesTable";
-import { getAllTimes } from "../store/features/times/timesThunks";
+import { getStaffTimes } from "../store/features/times/timesThunks";
 
 const Times = () => {
   const dispatch = useDispatch();
   const navigate = useNavigate();
   const { times, isLoading } = useSelector((state) => state.times);
   const { user } = useSelector((state) => state.auth);
-  console.log(user.userId);
+
   const [open, setOpen] = React.useState(false);
 
   useEffect(() => {
-    dispatch(getAllTimes(user?.staffId));
+    dispatch(getStaffTimes(user?.userId));
   }, []);
   console.log(times);
   return (
